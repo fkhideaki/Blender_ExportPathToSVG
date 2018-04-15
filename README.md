@@ -6,10 +6,9 @@ Blender plugin for export strokes(mesh edges and path data) to svg.
 - シーン内のストロークをSVGにエクスポートします。
   - メッシュデータの各エッジをSegmentとして出力。
   - カーブデータの各SplineをPolylineとして出力。
-
-## Freestyle SVG Exporter との違い
-- 各ストロークのサイズが、指定した単位系の実寸で出力します。
-- Blender内のオブジェクト単位でストロークをグループにして出力します。
+- Freestyle SVG Exporter との違い
+  - 各ストロークのサイズが、指定した単位系の実寸で出力します。
+  - Blender内のオブジェクト単位でストロークをグループにして出力します。
 
 ## インストール
 - installer/SVGPathExporter.zip  
