@@ -24,7 +24,7 @@ Blender plugin for export strokes(mesh edges and path data) to svg.
 - Unit
   - 出力するデータの単位系。
 - Coordinate
-  - 2Dに投影刷る座標系。
+  - 2Dに投影する座標系。
 - Stroke width
   - ストロークの太さ  
     ※ 各ストロークに対して太さを設定することはできません。
