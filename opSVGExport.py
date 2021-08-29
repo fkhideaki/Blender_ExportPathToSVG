@@ -246,7 +246,7 @@ def fkhd_menu_svgpath_export(self, context):
 def regOps(reg):
     if reg:
         bpy.utils.register_class(FKHD_IO_ExportSvgPath)
-        bpy.types.INFO_MT_file_export.append(fkhd_menu_svgpath_export)
+        bpy.types.TOPBAR_MT_file_export.append(fkhd_menu_svgpath_export)
     else:
         bpy.utils.unregister_class(FKHD_IO_ExportSvgPath)
-        bpy.types.INFO_MT_file_export.remove(fkhd_menu_svgpath_export)
+        bpy.types.TOPBAR_MT_file_export.remove(fkhd_menu_svgpath_export)
