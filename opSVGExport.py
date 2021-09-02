@@ -166,7 +166,7 @@ def getTarget(sel_only):
         if not isSupportedType(obj):
             continue
         if sel_only:
-            if not obj.select:
+            if not obj.select_get():
                 continue
         s.append(obj)
     return s
@@ -202,19 +202,19 @@ class FKHD_IO_ExportSvgPath(Operator, ExportHelper):
 
     filename_ext = ".svg"
 
-    filter_glob = StringProperty(
+    filter_glob: StringProperty(
             default = "*.svg",
             options = {'HIDDEN'},
             maxlen = 255,
             )
 
-    sel_only = BoolProperty(
+    sel_only: BoolProperty(
             name = "Select only",
             description = "Select only",
             default = True,
             )
 
-    unit = EnumProperty(
+    unit: EnumProperty(
             name="Unit",
             description="Export unit",
             items=(('cm', "cm", "cm"),
@@ -222,7 +222,7 @@ class FKHD_IO_ExportSvgPath(Operator, ExportHelper):
             default='cm',
             )
 
-    coord = EnumProperty(
+    coord: EnumProperty(
             name="Coordinate",
             description="Export coordination",
             items=(('XY', "XY", "XY"),
@@ -231,7 +231,7 @@ class FKHD_IO_ExportSvgPath(Operator, ExportHelper):
             default='XY',
             )
 
-    strokeWidth = FloatProperty(
+    strokeWidth: FloatProperty(
             name="Stroke width",
             description="Stroke width",
             default=0.1,
