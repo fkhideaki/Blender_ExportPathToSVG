@@ -1,3 +1,4 @@
+
 import bpy
 import sys
 
@@ -92,8 +93,9 @@ def beginSVG(f, objects):
 def endSVG(f):
     f.write('</svg>\n')
 
-def beginGroup(f):
+def beginStrokeGroup(f, name):
     f.write('<g\n')
+    f.write('  id="' + name + '"\n')
     f.write('  fill="none"\n')
     f.write('  stroke="black"\n')
     f.write('  stroke-width="' + str(svgStrokeWidth) + '"\n')
@@ -145,12 +147,12 @@ def writeCurveStrokes(f, obj):
         writeSpline(f, obj, spl)
 
 def writeMeshPath(f, obj):
-    beginGroup(f)
+    beginStrokeGroup(f, obj.name)
     writeMeshStrokes(f, obj)
     endGroup(f)
 
 def writeCurvePath(f, obj):
-    beginGroup(f)
+    beginStrokeGroup(f, obj.name)
     writeCurveStrokes(f, obj)
     endGroup(f)
 
