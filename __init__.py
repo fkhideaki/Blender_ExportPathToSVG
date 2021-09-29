@@ -1,7 +1,7 @@
 bl_info = {
     "name" : "Svg path exporter",
     "author" : "Hideaki Fukushima",
-    "version" : (1, 0),
+    "version" : (1, 1),
     "blender" : (2, 93, 0),
     "location" : "File > Export > Export strokes to SVG",
     "description" : "Export mesh edges and curves to svg as strokes",
