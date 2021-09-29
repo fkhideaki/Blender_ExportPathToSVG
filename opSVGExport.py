@@ -102,6 +102,9 @@ def beginStrokeGroup(f, name):
     f.write('  stroke-linecap="round"\n')
     f.write('>\n')
 
+def beginGroup(f, name):
+    f.write('<g id="' + name + '">\n')
+
 def endGroup(f):
     f.write('</g>\n')
 
@@ -180,7 +183,28 @@ def saveSVGMain(f, sel_only):
         writeObject(f, obj)
     endSVG(f)
 
-def writeSVG(context, filepath, sel_only, unit, coord, strokeWidth):
+def procCollection(f, parent, selOnly):
+    for col in parent.children:
+        beginGroup(f, col.name)
+        procCollection(f, col, selOnly)
+        endGroup(f)
+    for obj in parent.objects:
+        if not obj.visible_get():
+            continue
+        if selOnly:
+            if not obj.select_get():
+                continue
+        writeObject(f, obj)
+
+def saveSVGMainCollection(context, f, selOnly):
+    objects = getTarget(selOnly)
+    beginSVG(f, objects)
+    act = context.scene
+    mc = act.collection
+    procCollection(f, mc, selOnly)
+    endSVG(f)
+
+def writeSVG(context, filepath, sel_only, unit, coord, strokeWidth, enableCollection):
     global svgUnit
     global svgStrokeWidth
     svgUnit = unit
@@ -188,7 +212,10 @@ def writeSVG(context, filepath, sel_only, unit, coord, strokeWidth):
     setCoord(coord)
     f = open(filepath, 'w', encoding='utf-8')
     try:
-        saveSVGMain(f, sel_only)
+        if enableCollection:
+            saveSVGMainCollection(context, f, sel_only)
+        else:
+            saveSVGMain(f, sel_only)
     except:
         print("Unexpected error:", sys.exc_info()[0])
         f.close()
@@ -216,6 +243,12 @@ class FKHD_IO_ExportSvgPath(Operator, ExportHelper):
             default = True,
             )
 
+    enable_collection: BoolProperty(
+            name = "Enable collection",
+            description = "Enable collection",
+            default = False,
+            )
+
     unit: EnumProperty(
             name="Unit",
             description="Export unit",
@@ -240,7 +273,7 @@ class FKHD_IO_ExportSvgPath(Operator, ExportHelper):
             )
 
     def execute(self, context):
-        return writeSVG(context, self.filepath, self.sel_only, self.unit, self.coord, self.strokeWidth)
+        return writeSVG(context, self.filepath, self.sel_only, self.unit, self.coord, self.strokeWidth, self.enable_collection)
 
 def fkhd_menu_svgpath_export(self, context):
     self.layout.operator(FKHD_IO_ExportSvgPath.bl_idname, text="Export strokes to SVG")
